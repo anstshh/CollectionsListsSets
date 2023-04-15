@@ -27,9 +27,9 @@ public class EmployeeService {
 
     public Employee add(String firstName, String lastName) {
         Employee employee = new Employee(firstName, lastName);
-        if(employees.size() < SIZE) {
-            for(Employee emp : employees) {
-                if(emp.equals(employee)) {
+        if (employees.size() < SIZE) {
+            for (Employee emp : employees) {
+                if (emp.equals(employee)) {
                     throw new EmployeeAlreadyAddedException();
                 }
             }
@@ -40,7 +40,7 @@ public class EmployeeService {
 
     }
 
-    public Employee find (String firstName, String lastName){
+    public Employee find(String firstName, String lastName) {
         Employee employee = new Employee(firstName, lastName);
         for (Employee emp : employees) {
             if (employee.equals(emp)) {
@@ -50,11 +50,11 @@ public class EmployeeService {
         throw new EmployeeNotFoundException();
     }
 
-    public Employee remove (String firstName, String lastName){
+    public Employee remove(String firstName, String lastName) {
         Employee employee = new Employee(firstName, lastName);
-      if (employees.remove(employee)) {
-                return employee;
-            }
+        if (employees.remove(employee)) {
+            return employee;
+        }
         throw new EmployeeNotFoundException();
     }
 }
