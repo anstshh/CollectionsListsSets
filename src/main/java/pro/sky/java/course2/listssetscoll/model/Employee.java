@@ -12,6 +12,9 @@ public class Employee {
     @JsonProperty("lastName")
     private final String surname;
 
+    public String getFullName() {return name + " " + surname;}
+
+
     public Employee(String name, String surname) {
         this.name = name;
         this.surname = surname;

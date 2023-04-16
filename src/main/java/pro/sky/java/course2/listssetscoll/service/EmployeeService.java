@@ -7,55 +7,49 @@ import pro.sky.java.course2.listssetscoll.exception.EmployeeNotFoundException;
 import pro.sky.java.course2.listssetscoll.exception.EmployeeStorageIsFullException;
 import pro.sky.java.course2.listssetscoll.model.Employee;
 
-import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class EmployeeService {
 
     private static final int SIZE = 4;
 
-    private final List<Employee> employees = new ArrayList<>(SIZE);
-    public List<Employee> list;
+    private final Map<String, Employee> employees;
 
-    @PostConstruct
-    public void init() {
-        employees.add(new Employee("Иван", "Иванов"));
-        employees.add(new Employee("Саша", "Сашова"));
-        employees.add(new Employee("Паша", "Павлов"));
+    public EmployeeService() {
+        this.employees = new HashMap<>();
     }
+
 
     public Employee add(String firstName, String lastName) {
         Employee employee = new Employee(firstName, lastName);
-        if (employees.size() < SIZE) {
-            for (Employee emp : employees) {
-                if (emp.equals(employee)) {
-                    throw new EmployeeAlreadyAddedException();
-                }
-            }
-            employees.add(employee);
-            return employee;
+        if (employees.containsKey(employee.getFullName())) {
+            throw new EmployeeAlreadyAddedException();
         }
-        throw new EmployeeStorageIsFullException();
-
+        employees.put(employee.getFullName(), employee);
+        return employee;
     }
 
-    public Employee find(String firstName, String lastName) {
+
+    public Employee remove(String firstName, String lastName) {
         Employee employee = new Employee(firstName, lastName);
-        for (Employee emp : employees) {
-            if (employee.equals(emp)) {
-                return employee;
-            }
+        if (employees.containsKey(employee.getFullName())) {
+            return employees.remove(employee.getFullName());
         }
         throw new EmployeeNotFoundException();
     }
 
-    public Employee remove(String firstName, String lastName) {
+
+    public Employee find(String firstName, String lastName) {
         Employee employee = new Employee(firstName, lastName);
-        if (employees.remove(employee)) {
-            return employee;
+        if (employees.containsKey(employee.getFullName())) {
+            return employees.get(employee.getFullName());
         }
         throw new EmployeeNotFoundException();
     }
 }
+
 

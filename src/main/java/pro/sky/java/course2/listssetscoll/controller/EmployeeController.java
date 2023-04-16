@@ -38,11 +38,6 @@ public class EmployeeController {
 
     }
 
-    @GetMapping("/")
-    public List<Employee> list() {
-        return employeeService.list;
-    }
-
 }
 
 
